@@ -6,25 +6,29 @@ import { ripGrep } from 'ripgrep-js';
 const main = () => {
   if (process.argv.length < 3) {
     console.error('Error: No path to search provided.');
-    return 1;
+    process.exitCode = 1;
+    return;
   }
 
   const projectPath = process.argv[2];
   if (!fs.existsSync(projectPath)) {
     console.error('Error: Project path does not exist.');
-    return 2;
+    process.exitCode = 2;
+    return;
   }
 
   const packageFilePath = path.join(projectPath, 'package.json');
   if (!fs.existsSync(packageFilePath)) {
     console.error('Error: Cannot find package.json in project path.');
-    return 3;
+    process.exitCode = 3;
+    return;
   }
 
   const packageFile: Record<string, string> = JSON.parse(fs.readFileSync(packageFilePath, { encoding: 'utf-8' }));
   if (!Object.keys(packageFile).includes('dependencies')) {
     console.error('Error: The found package.json file has no dependencies.');
-    return 4;
+    process.exitCode = 4;
+    return;
   }
 
   console.log('Searching for dependencies...');
@@ -46,7 +50,6 @@ const main = () => {
       }.`
     );
   });
-  return 0;
 };
 
 main();
