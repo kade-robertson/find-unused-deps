@@ -35,6 +35,6 @@
     "yarn": "1.22.11"
   },
   "bin": {
-    "find-unused": "bin/index.js"
+    "find-unused-deps": "bin/index.js"
   }
 }
